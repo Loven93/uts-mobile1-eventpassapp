@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import { colors, fonts } from '../theme';
 
 const MAIN_STAGE = 'Main Stage';
-
 export default function RundownItemCard(props) {
-  // "19:00 - 19:45 WIB" -> mulai "19:00", selesai "19:45"
   const [mulai, selesai] = props.timeSlot.replace(' WIB', '').split(' - ');
   const isMainStage = props.stageName === MAIN_STAGE;
 
@@ -44,7 +42,6 @@ export default function RundownItemCard(props) {
   );
 }
 
-// Validasi props: tipe data wajib sesuai kontrak komponen.
 RundownItemCard.propTypes = {
   performerName: PropTypes.string.isRequired,
   timeSlot: PropTypes.string.isRequired,

@@ -68,7 +68,6 @@ export default function EventHeader(props) {
   );
 }
 
-// Validasi props: tipe data wajib sesuai kontrak komponen.
 EventHeader.propTypes = {
   eventName: PropTypes.string.isRequired,
   venue: PropTypes.string.isRequired,

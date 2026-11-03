@@ -4,8 +4,6 @@ import FontAwesomeIcon from '@react-native-vector-icons/fontawesome-free-solid';
 import PropTypes from 'prop-types';
 import { colors, fonts } from '../theme';
 
-// Kapasitas venue dipakai untuk meter segmen. Meter dibuat dari 12 kotak kecil
-// yang gayanya dipilih lewat kondisi (menyala / padam), bukan lewat inline style.
 const CAPACITY = 500;
 const SEGMENT_COUNT = 12;
 const SEGMENTS = Array.from({ length: SEGMENT_COUNT }, (_, i) => i);
