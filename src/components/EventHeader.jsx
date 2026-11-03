@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import FontAwesomeIcon from '@react-native-vector-icons/fontawesome-free-solid';
+import PropTypes from 'prop-types';
 import { colors, fonts } from '../theme';
 
 const DASH_COUNT = 26;
@@ -10,16 +11,11 @@ const BARCODE = [
   't', 'k', 'k', 't', 'k', 't', 'k', 't', 't', 'k', 'k', 't', 'k', 't',
 ];
 
-export default function EventHeader({
-  eventName,
-  venue,
-  eventDate,
-  posterUrl,
-}) {
+export default function EventHeader(props) {
   return (
     <View style={styles.ticket}>
       <View style={styles.posterWrap}>
-        <Image source={{ uri: posterUrl }} style={styles.posterImage} />
+        <Image source={{ uri: props.posterUrl }} style={styles.posterImage} />
         <View style={styles.overlayTop} />
         <View style={styles.overlayBottom} />
 
@@ -28,7 +24,7 @@ export default function EventHeader({
             <View style={styles.liveDot} />
             <Text style={styles.liveText}>ACCESS PASS</Text>
           </View>
-          <Text style={styles.eventTitle}>{eventName}</Text>
+          <Text style={styles.eventTitle}>{props.eventName}</Text>
         </View>
       </View>
 
@@ -47,7 +43,7 @@ export default function EventHeader({
           <Text style={styles.infoLabel}>TANGGAL</Text>
           <View style={styles.infoValueRow}>
             <FontAwesomeIcon name="calendar" size={12} color={colors.ember} />
-            <Text style={styles.infoValue}>{eventDate}</Text>
+            <Text style={styles.infoValue}>{props.eventDate}</Text>
           </View>
         </View>
 
@@ -55,7 +51,7 @@ export default function EventHeader({
           <Text style={styles.infoLabel}>LOKASI</Text>
           <View style={styles.infoValueRow}>
             <FontAwesomeIcon name="map-marker-alt" size={12} color={colors.ember} />
-            <Text style={styles.infoValue}>{venue}</Text>
+            <Text style={styles.infoValue}>{props.venue}</Text>
           </View>
         </View>
 
@@ -71,6 +67,14 @@ export default function EventHeader({
     </View>
   );
 }
+
+// Validasi props: tipe data wajib sesuai kontrak komponen.
+EventHeader.propTypes = {
+  eventName: PropTypes.string.isRequired,
+  venue: PropTypes.string.isRequired,
+  eventDate: PropTypes.string.isRequired,
+  posterUrl: PropTypes.string.isRequired,
+};
 
 const NOTCH = 22;
 

@@ -1,17 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import FontAwesomeIcon from '@react-native-vector-icons/fontawesome-free-solid';
+import PropTypes from 'prop-types';
 import { colors, fonts } from '../theme';
 
 const MAIN_STAGE = 'Main Stage';
 
-export default function RundownItemCard({
-  performerName,
-  timeSlot,
-  stageName,
-}) {
-  const [mulai, selesai] = timeSlot.replace(' WIB', '').split(' - ');
-  const isMainStage = stageName === MAIN_STAGE;
+export default function RundownItemCard(props) {
+  // "19:00 - 19:45 WIB" -> mulai "19:00", selesai "19:45"
+  const [mulai, selesai] = props.timeSlot.replace(' WIB', '').split(' - ');
+  const isMainStage = props.stageName === MAIN_STAGE;
 
   return (
     <View style={styles.row}>
@@ -33,18 +31,25 @@ export default function RundownItemCard({
             color={isMainStage ? colors.ember : colors.sun}
           />
           <Text style={styles.stageLabel}>
-            {stageName.toUpperCase()}
+            {props.stageName.toUpperCase()}
           </Text>
         </View>
-        <Text style={styles.performerText}>{performerName}</Text>
+        <Text style={styles.performerText}>{props.performerName}</Text>
         <View style={styles.cardBottom}>
           <FontAwesomeIcon name="clock" size={11} color={colors.textMuted} />
-          <Text style={styles.timeText}>{timeSlot}</Text>
+          <Text style={styles.timeText}>{props.timeSlot}</Text>
         </View>
       </View>
     </View>
   );
 }
+
+// Validasi props: tipe data wajib sesuai kontrak komponen.
+RundownItemCard.propTypes = {
+  performerName: PropTypes.string.isRequired,
+  timeSlot: PropTypes.string.isRequired,
+  stageName: PropTypes.string.isRequired,
+};
 
 const styles = StyleSheet.create({
   row: {

@@ -1,24 +1,27 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import FontAwesomeIcon from '@react-native-vector-icons/fontawesome-free-solid';
+import PropTypes from 'prop-types';
 import { colors, fonts } from '../theme';
 
+// Kapasitas venue dipakai untuk meter segmen. Meter dibuat dari 12 kotak kecil
+// yang gayanya dipilih lewat kondisi (menyala / padam), bukan lewat inline style.
 const CAPACITY = 500;
 const SEGMENT_COUNT = 12;
 const SEGMENTS = Array.from({ length: SEGMENT_COUNT }, (_, i) => i);
 
-export default function StatBadge({ label, count, onPress }) {
+export default function StatBadge(props) {
   const litSegments = Math.min(
     SEGMENT_COUNT,
-    Math.ceil((count / CAPACITY) * SEGMENT_COUNT)
+    Math.ceil((props.count / CAPACITY) * SEGMENT_COUNT)
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.label}>{props.label}</Text>
 
       <View style={styles.counterRow}>
-        <Text style={styles.countText}>{count}</Text>
+        <Text style={styles.countText}>{props.count}</Text>
         <Text style={styles.capacityText}>/ {CAPACITY} kapasitas</Text>
       </View>
 
@@ -33,7 +36,7 @@ export default function StatBadge({ label, count, onPress }) {
 
       <TouchableOpacity
         style={styles.actionButton}
-        onPress={onPress}
+        onPress={props.onPress}
         activeOpacity={0.85}
       >
         <FontAwesomeIcon name="check-circle" size={15} color={colors.ink} />
@@ -43,6 +46,12 @@ export default function StatBadge({ label, count, onPress }) {
     </View>
   );
 }
+
+StatBadge.propTypes = {
+  label: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+  onPress: PropTypes.func.isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {
