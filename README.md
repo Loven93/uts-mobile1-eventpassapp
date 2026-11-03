@@ -66,6 +66,7 @@ utsproject/
 - React Native (CLI, tanpa Expo)
 - `react-native-safe-area-context` untuk area aman perangkat
 - `@react-native-vector-icons/fontawesome-free-solid` untuk ikon
+- `prop-types` untuk validasi tipe data props
 
 ---
 
@@ -89,6 +90,24 @@ Pastikan Android emulator sudah menyala dan terhubung ke internet agar gambar po
 ## Arsitektur Komponen & Props
 
 Aliran data **satu arah**: `App.jsx` (induk) mengirim data ke komponen anak melalui props.
+
+Setiap komponen menerima props sebagai parameter fungsi (`function Nama(props)`) dan membacanya dengan `props.namaProp`. Tipe data props divalidasi memakai `PropTypes`:
+
+```jsx
+// App.jsx (mengirim)
+<StatBadge label="Penonton hadir di venue" count={checkInCount} onPress={handleCheckIn} />
+
+// StatBadge.jsx (menerima dan memvalidasi)
+export default function StatBadge(props) {
+  return <Text>{props.count}</Text>;
+}
+
+StatBadge.propTypes = {
+  label: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+  onPress: PropTypes.func.isRequired,
+};
+```
 
 | Komponen | Props | Tipe | Fungsi |
 |---|---|---|---|
@@ -154,11 +173,10 @@ Repositori dikelola dengan Git secara bertahap dengan pesan yang deskriptif:
 
 ```text
 feat: setup initial utsproject architecture and safe-area dependencies
+style: add centralized festival theme with colors and fonts
 feat: create modular EventHeader, StatBadge, and RundownItemCard components
 feat: implement check-in counter and immutable rundown array state mutation
-style: enforce 100% StyleSheet.create without inline styles and integrate FontAwesome
-docs: finalize README.md with system architecture and testing matrix
-style: redesign UI with festival-ticket theme and centralized theme.js
+docs: add README.md with system architecture and testing matrix
 ```
 
 Lihat riwayat lengkap dengan `git log --oneline`.
